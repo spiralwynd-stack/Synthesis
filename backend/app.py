@@ -4403,6 +4403,14 @@ def _start_replace_background_job(
 
     if response.status_code != 200:
         message = response.text.strip() if response.text else "Unknown Stability AI error."
+        if response.status_code == 401:
+            raise HTTPException(
+                status_code=401,
+                detail=(
+                    "Stability AI authentication failed. "
+                    "Set a valid STABILITY_API_KEY in your deployment environment and redeploy."
+                ),
+            )
         raise HTTPException(
             status_code=502,
             detail=(
@@ -4471,6 +4479,14 @@ def _start_sd3_image_to_image_generation(
 
     if response.status_code != 200:
         message = response.text.strip() if response.text else "Unknown Stability AI error."
+        if response.status_code == 401:
+            raise HTTPException(
+                status_code=401,
+                detail=(
+                    "Stability AI authentication failed. "
+                    "Set a valid STABILITY_API_KEY in your deployment environment and redeploy."
+                ),
+            )
         raise HTTPException(
             status_code=502,
             detail=f"Stability AI SD3 returned {response.status_code}: {message[:400]}",
@@ -4614,6 +4630,14 @@ def _poll_stability_result(generation_id: str, timeout_seconds: int = 140) -> tu
             return response.content, mime_type
 
         message = response.text.strip() if response.text else "Unknown Stability AI result error."
+        if response.status_code == 401:
+            raise HTTPException(
+                status_code=401,
+                detail=(
+                    "Stability AI authentication failed while polling results. "
+                    "Set a valid STABILITY_API_KEY in your deployment environment and redeploy."
+                ),
+            )
         raise HTTPException(
             status_code=502,
             detail=f"Stability AI results returned {response.status_code}: {message[:400]}",
