@@ -1,0 +1,15 @@
+fastapi
+uvicorn
+python-multipart
+pillow
+opencv-python
+scikit-learn
+numpy
+sentence-transformers
+requests
+
+# Optional AI upgrades after MVP works:
+# transformers
+# spacy<3.8
+# pronouncing
+# rembg
