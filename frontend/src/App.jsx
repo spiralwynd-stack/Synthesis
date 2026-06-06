@@ -1345,23 +1345,6 @@ function App() {
                     Inputs changed since the last analysis. Re-run analysis to refresh prompt and colors.
                   </p>
                 ) : null}
-                {result?.image_analysis?.prompt_used_preview || result?.image_analysis?.background_prompt ? (
-                  <details className="prompt-display" style={{ marginTop: '1em' }} open>
-                    <summary>Prompt Preview (Before Generation)</summary>
-                    <pre
-                      style={{
-                        whiteSpace: 'pre-wrap',
-                        wordBreak: 'break-word',
-                        background: '#f8f8f8',
-                        padding: '1em',
-                        borderRadius: '6px',
-                        fontSize: '0.95em',
-                      }}
-                    >
-                      {result.image_analysis.prompt_used_preview || result.image_analysis.background_prompt}
-                    </pre>
-                  </details>
-                ) : null}
                 <button
                   type="button"
                   onClick={handleGenerateEmotionImage}
@@ -1386,12 +1369,6 @@ function App() {
                 <figcaption>
                   Driven by emotions: {(generatedImage.emotions || []).join(', ') || 'n/a'}
                 </figcaption>
-                {generatedImage.prompt_used ? (
-                  <details className="prompt-display" style={{marginTop: '1em'}}>
-                    <summary>Show Generation Prompt</summary>
-                    <pre style={{whiteSpace: 'pre-wrap', wordBreak: 'break-word', background: '#f8f8f8', padding: '1em', borderRadius: '6px', fontSize: '0.95em'}}>{generatedImage.prompt_used}</pre>
-                  </details>
-                ) : null}
               </figure>
             ) : null}
           </div>
