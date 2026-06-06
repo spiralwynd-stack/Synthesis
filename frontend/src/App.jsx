@@ -1334,11 +1334,11 @@ function App() {
 
         {result ? (
           <div className="left-image-panel">
-            <h3>Emotion Image</h3>
+            <h3>Theatre Image</h3>
             {!generatedImage ? (
               <>
                 <p className="hint">
-                  Review the analysis first, then generate one emotion-based image for this session.
+                  Review the analysis first, then generate one theatre-inspired image for this session.
                 </p>
                 {currentInputSignature() !== analyzedSignature ? (
                   <p className="hint" style={{ color: '#9c5d00' }}>
@@ -1363,7 +1363,7 @@ function App() {
               <figure className="generated-image-wrap">
                 <img
                   src={generatedImage.image_data_url}
-                  alt="Emotion-based generation"
+                  alt="Theatre-inspired generation"
                   className="generated-image"
                 />
                 <figcaption>
