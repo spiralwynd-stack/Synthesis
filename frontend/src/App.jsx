@@ -1086,7 +1086,8 @@ function App() {
   const [analyzedSignature, setAnalyzedSignature] = useState('')
 
   const apiBase =
-    import.meta.env.VITE_API_BASE?.trim() || 'http://127.0.0.1:8000'
+    import.meta.env.VITE_API_BASE?.trim() ||
+    (typeof window !== 'undefined' ? window.location.origin : 'http://127.0.0.1:8000')
 
   const palette = useMemo(() => result?.image_analysis?.palette ?? [], [result])
   const topDisplayColors = useMemo(() => {
