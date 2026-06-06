@@ -123,6 +123,8 @@ import time
 import json
 import base64
 from fastapi import FastAPI, UploadFile, File, HTTPException, Form
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -152,6 +154,8 @@ import random
 
 app = FastAPI(title="Feeling AI API", version="0.1.0")
 logger = logging.getLogger(__name__)
+
+FRONTEND_DIST_DIR = Path(__file__).resolve().parent.parent / "frontend" / "dist"
 
 app.add_middleware(
     CORSMiddleware,
@@ -5211,3 +5215,42 @@ async def generate_emotion_image(
         "generation_id": generation_id,
         "status": "generated",
     }
+
+
+@app.get("/", include_in_schema=False)
+def serve_frontend_root():
+    index_file = FRONTEND_DIST_DIR / "index.html"
+    if index_file.exists():
+        return FileResponse(index_file)
+    return {"status": "ok", "message": "Frontend build not found. Build frontend/dist to serve UI from this backend."}
+
+
+@app.get("/{path:path}", include_in_schema=False)
+def serve_frontend_path(path: str):
+    # Keep API/docs routes handled by their dedicated endpoints.
+    protected_prefixes = (
+        "health",
+        "analyze",
+        "analyze-text",
+        "analyze-photo",
+        "generate-emotion-image",
+        "docs",
+        "redoc",
+        "openapi.json",
+    )
+    if path.startswith(protected_prefixes):
+        raise HTTPException(status_code=404, detail="Not found")
+
+    candidate = FRONTEND_DIST_DIR / path
+    if candidate.exists() and candidate.is_file():
+        return FileResponse(candidate)
+
+    index_file = FRONTEND_DIST_DIR / "index.html"
+    if index_file.exists():
+        return FileResponse(index_file)
+
+    raise HTTPException(status_code=404, detail="Not found")
+
+
+if FRONTEND_DIST_DIR.exists() and (FRONTEND_DIST_DIR / "assets").exists():
+    app.mount("/assets", StaticFiles(directory=FRONTEND_DIST_DIR / "assets"), name="frontend-assets")

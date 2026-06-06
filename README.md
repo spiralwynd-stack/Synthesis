@@ -8,9 +8,8 @@ This workspace now includes:
 ## 1) Run Backend
 
 ```bash
-cd backend
 source .venv/bin/activate
-uvicorn app:app --reload --app-dir .
+python -m uvicorn backend.app:app --reload --host 127.0.0.1 --port 8000
 ```
 
 Backend URL: http://127.0.0.1:8000
@@ -24,6 +23,19 @@ npm run dev
 ```
 
 Frontend URL: http://127.0.0.1:5173
+
+## Deploy Public Website (Render)
+
+This repo is configured for one-service deployment where the backend serves the built frontend from the same URL.
+
+1. In Render, create a new `Blueprint` deployment from this repo:
+  - `https://github.com/spiralwynd-stack/Synthesis`
+2. Render will detect `render.yaml` and provision the `feeling-ai` web service.
+3. In Render service settings, set environment variable:
+  - `STABILITY_API_KEY=your_key_here`
+4. Deploy. Render will build the Docker image, compile the frontend, and serve the app publicly.
+
+After deployment, your public site is the Render service URL.
 
 ## What Works Now
 

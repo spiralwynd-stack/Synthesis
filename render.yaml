@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: feeling-ai
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    autoDeploy: true
+    envVars:
+      - key: STABILITY_API_KEY
+        sync: false

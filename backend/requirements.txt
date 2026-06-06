@@ -5,7 +5,6 @@ pillow
 opencv-python
 scikit-learn
 numpy
-sentence-transformers
 requests
 
 # Optional AI upgrades after MVP works:
