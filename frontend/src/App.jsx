@@ -1350,7 +1350,7 @@ function App() {
                   onClick={handleGenerateEmotionImage}
                   disabled={generatingImage}
                 >
-                  {generatingImage ? 'Generating Emotion Image...' : 'Generate One Emotion Image'}
+                  {generatingImage ? 'Generating Theatre Image...' : 'Generate One Theatre Image'}
                 </button>
               </>
             ) : (
